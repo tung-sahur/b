@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Logístico Solo</title>
+    <link rel="stylesheet" href="style.css"> <!-- Reusing the same CSS -->
+    <style>
+        /* Specific styles for the solo page */
+        #start-screen {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        #quiz-area {
+            /* Styles for the main quiz content */
+        }
+        #question-info {
+            display: flex; /* Keep flex just in case for layout flexibility */
+            justify-content: flex-start; /* Align to start now that timer is gone */
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        #question-number {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-right: 10px; /* Add some space after the number */
+        }
+         /* Remove timer display style - it's gone */
+        /* #question-timer-display { ... } */
+
+        #question-options {
+            margin-top: 15px;
+        }
+        #question-options div {
+            margin-bottom: 10px;
+        }
+        #question-options input[type="radio"] {
+            margin-right: 5px;
+        }
+        #feedback-area {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .feedback-correct {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+         .feedback-incorrect {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        #model-answer-area {
+             margin-top: 15px;
+        }
+        #model-answer-area h4 {
+             margin-bottom: 5px;
+             color: #0056b3;
+        }
+        #next-question-btn, #restart-quiz-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+        }
+        #next-question-btn:hover, #restart-quiz-btn:hover {
+             background-color: #0056b3;
+        }
+        #end-screen {
+             text-align: center;
+             margin-top: 30px;
+             padding-top: 20px;
+             border-top: 1px solid #eee;
+        }
+         #end-screen h2 {
+             color: #28a745; /* Green for success/completion */
+         }
+          #end-screen p {
+             font-size: 1.2em;
+             margin-bottom: 20px;
+          }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Quiz Logístico Solo</h1>
+
+        <div id="start-screen">
+            <p>Teste seus conhecimentos resolvendo 10 situações logísticas aleatórias.</p>
+             <!-- Removed timer configuration input -->
+            <button onclick="startGame()">Iniciar Quiz</button>
+        </div>
+
+        <div id="quiz-area" class="hidden">
+            <div id="question-info">
+                <span id="question-number">Questão 1 de 10</span>
+                <!-- Removed timer display span -->
+            </div>
+
+            <div id="scenario-area">
+                <h3>Situação:</h3> <!-- No number here -->
+                <p id="scenario-text"></p>
+            </div>
+
+            <div id="question-options">
+                <!-- Options will be loaded here -->
+            </div>
+
+            <div id="feedback-area" class="hidden">
+                 <!-- Feedback and model answer will be shown here -->
+            </div>
+
+            <button id="next-question-btn" class="hidden" onclick="nextQuestion()">Próxima Questão</button>
+        </div>
+
+        <div id="end-screen" class="hidden">
+            <h2>Fim do Quiz!</h2>
+            <p id="final-score"></p>
+            <button id="restart-quiz-btn" onclick="restartGame()">Jogar Novamente</button>
+        </div>
+    </div>
+
+    <script src="solo_script.js"></script> <!-- Link to the new script -->
+</body>
+</html>

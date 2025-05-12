@@ -1,4 +1,4 @@
-// Scenarios data (Keep the full array here)
+// Scenarios data (copy the array from the previous script.js)
 const scenarios = [
     { id: 1, category: "Quantidade", situation: "A carga chegou faltando uma caixa em relação à nota fiscal.", options: ["Recusar toda a carga e solicitar nova entrega.", "Aceitar a carga e registrar a divergência na nota fiscal, documentando com fotos e solicitando assinatura do entregador.", "Aceitar a carga normalmente e resolver depois.", "Ligar para o supervisor imediatamente."], correctOptionIndex: 1, modelAnswer: "Aceitar a carga parcial, registrar claramente a divergência de quantidade na nota fiscal, documentar com fotos a condição da carga recebida e solicitar a assinatura do entregador no documento. Comunicar imediatamente o setor de compras e o supervisor sobre a falta." },
     { id: 2, category: "Quantidade", situation: "Erro na nota fiscal (quantidade maior do que a recebida).", options: ["Devolver toda a carga.", "Aceitar a carga e não mencionar o problema.", "Registrar a divergência na nota fiscal, documentando com fotos e solicitando assinatura do entregador.", "Solicitar que o motorista retorne com a mercadoria faltante."], correctOptionIndex: 2, modelAnswer: "Contar a mercadoria recebida e compará-la com a nota fiscal. Se houver divergência (nota > físico), registrar a quantidade *recebida* na nota fiscal, anotar a divergência, documentar com fotos e solicitar a assinatura do entregador. Notificar o setor de compras e finanças sobre o erro na nota." },
@@ -50,326 +50,170 @@ const scenarios = [
      { id: 48, category: "Especificações/Qualidade", situation: "Entrega de material perigoso sem as sinalizações de segurança adequadas.", options: ["Aceitar o material normalmente.", "Recusar o recebimento.", "Aceitar apenas se houver equipamentos e área apropriada para manuseio seguro, providenciando sinalização adequada.", "Solicitar que o fornecedor retorne com a sinalização adequada."], correctOptionIndex: 2, modelAnswer: "Não recusar o recebimento de imediato, mas não manusear sem segurança. Verificar se a empresa possui equipamentos adequados e uma área designada e segura para manusear e segregar materiais perigosos, mesmo sem a sinalização correta. Se a área e equipamentos estiverem disponíveis, receber a carga com extrema cautela, segregá-la e providenciar a sinalização interna adequada imediatamente. Notificar os setores de segurança e compras sobre a falha na sinalização por parte do transportador/fornecedor." },
      { id: 49, category: "Necessidades Especiais", situation: "Produto recebido exige calibração/aferição antes do armazenamento.", options: ["Armazenar sem calibração.", "Recusar o recebimento.", "Segregar o produto e acionar a equipe técnica para calibração.", "Solicitar que o fornecedor retorne com o produto já calibrado."], correctOptionIndex: 2, modelAnswer: "Não armazenar o produto sem a calibração necessária, pois isso comprometeria sua usabilidade e rastreabilidade. Segregar o produto na área de recebimento ou em uma área de quarentena/inspeção claramente identificada como 'Aguardando Calibração'. Notificar imediatamente a equipe técnica ou laboratório responsável pela calibração para que realizem o procedimento antes do produto ser liberado para armazenamento ou uso." },
      { id: 50, category: "Necessidades Especiais", situation: "Falta de pessoal para conferência de uma carga grande.", options: ["Aceitar a carga sem conferência completa.", "Adiar o recebimento.", "Priorizar a conferência dos itens mais críticos ou de maior valor.", "Solicitar apoio temporário de outros setores."], correctOptionIndex: 2, modelAnswer: "Não aceitar a carga sem a conferência adequada, pois isso gera riscos de divergências e perdas. Avaliar a carga e priorizar a conferência completa dos itens mais críticos (urgentes, de alto valor, perigosos, com validade curta) que *precisam* ser liberados. Para o restante da carga, se o tempo for muito limitado, solicitar ao supervisor apoio temporário de pessoal de outros setores para auxiliar na conferência completa ou, se a situação não permitir de forma alguma, negociar com o transportador o adiamento da entrega ou a entrega parcial para conferência posterior do restante." }
-    // Keep the full array here
+    // Make sure all 50 scenarios are copied here
 ];
 
-let currentMode = null;
-let currentScenario = null;
-let timers = []; // Array to hold timer states: { initial: seconds, current: seconds, interval: null, element: HTMLElement, inputElement: HTMLElement, label: string }
+const quizLength = 10; // Number of questions in the quiz
+let multiChoiceScenarios = [];
+let quizScenarios = [];
+let currentQuestionIndex = 0;
+let score = 0;
 
 // --- DOM Elements ---
-const modeSelectionDiv = document.getElementById('mode-selection');
-const gameAreaDiv = document.getElementById('game-area');
-const currentModeDisplay = document.getElementById('current-mode-display');
-const timerInputsDiv = document.getElementById('timer-inputs');
-const timerDisplaysDiv = document.getElementById('timer-displays');
-const startRoundBtn = document.getElementById('start-round-btn');
-const resetTimersBtn = document.getElementById('reset-timers-btn');
-// REMOVIDO: const scenarioNumberSpan = document.getElementById('scenario-number'); // This element no longer exists in index.html
+const startScreenDiv = document.getElementById('start-screen');
+const quizAreaDiv = document.getElementById('quiz-area');
+const endScreenDiv = document.getElementById('end-screen');
+const questionNumberSpan = document.getElementById('question-number');
+// Removed questionTimerDisplaySpan
 const scenarioTextP = document.getElementById('scenario-text');
-const multiChoiceOptionsDiv = document.getElementById('multi-choice-options');
-const showAnswerBtn = document.getElementById('show-answer-btn');
-const nextRoundBtn = document.getElementById('next-round-btn');
-const answerAreaDiv = document.getElementById('answer-area');
-const modelAnswerTextP = document.getElementById('model-answer-text');
+const questionOptionsDiv = document.getElementById('question-options');
+const feedbackAreaDiv = document.getElementById('feedback-area');
+const nextQuestionBtn = document.getElementById('next-question-btn');
+const finalScoreP = document.getElementById('final-score');
+// Removed questionTimeInput
 
-// --- Game Initialization ---
-function showModeSelection() {
-    modeSelectionDiv.classList.remove('hidden');
-    gameAreaDiv.classList.add('hidden');
-    // Clear any existing timer elements
-    timerInputsDiv.innerHTML = '';
-    timerDisplaysDiv.innerHTML = '';
-    timers = [];
-}
 
-function selectMode(mode) {
-    currentMode = mode;
-    modeSelectionDiv.classList.add('hidden');
-    gameAreaDiv.classList.remove('hidden');
-    currentModeDisplay.textContent = `Modo: ${mode === 'team' ? 'Equipe vs Equipe' : mode.toUpperCase()}`;
-
-    setupTimers(mode);
-    loadScenario(); // Call loadScenario after setting up timers and hiding mode selection
-}
-
-function setupTimers(mode) {
-    let numTimers = 0;
-    let timerLabels = [];
-
-    if (mode === '1v1') {
-        numTimers = 2;
-        timerLabels = ['Competidor 1', 'Competidor 2'];
-    } else if (mode === '1v1v1') {
-        numTimers = 3;
-        timerLabels = ['Competidor 1', 'Competidor 2', 'Competidor 3'];
-    } else if (mode === 'team') {
-        numTimers = 2;
-        timerLabels = ['Equipe 1', 'Equipe 2'];
+// --- Utility Function (Shuffle Array - Fisher-Yates) ---
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]]; // Swap elements
     }
-
-    timerInputsDiv.innerHTML = '';
-    timerDisplaysDiv.innerHTML = '';
-    timers = [];
-
-    for (let i = 0; i < numTimers; i++) {
-        // Setup Input
-        const inputDiv = document.createElement('div');
-        inputDiv.classList.add('timer-config');
-        inputDiv.innerHTML = `
-            <label>${timerLabels[i]} (segundos):</label>
-            <input type="number" value="180" min="1" id="timer-input-${i}">
-        `;
-        timerInputsDiv.appendChild(inputDiv);
-
-        // Setup Display
-        const displayDiv = document.createElement('div');
-        displayDiv.classList.add('timer-display');
-         displayDiv.innerHTML = `<div class="timer-label">${timerLabels[i]}</div><span id="timer-${i}">00:00</span>`;
-
-        const controlsDiv = document.createElement('div');
-        controlsDiv.classList.add('timer-controls');
-        controlsDiv.innerHTML = `
-             <button onclick="startTimer(${i})">Start</button>
-             <button onclick="pauseTimer(${i})">Pause</button>
-             <button onclick="resetTimer(${i})">Reset</button>
-        `;
-        displayDiv.appendChild(controlsDiv);
-
-        timerDisplaysDiv.appendChild(displayDiv);
-
-        // Store timer state
-        timers.push({
-            initial: 180, // Default initial value
-            current: 180, // Default current value
-            interval: null,
-            element: displayDiv.querySelector(`#timer-${i}`),
-            inputElement: inputDiv.querySelector(`#timer-input-${i}`),
-            label: timerLabels[i]
-        });
-
-         // Set initial display and attach input listener
-         timers[i].inputElement.addEventListener('change', (event) => setTimerValue(i, event.target.value));
-         // Initial set to display default
-         setTimerValue(i, timers[i].inputElement.value);
-         updateTimerDisplay(i); // Display the initial value
-    }
-
-     // Enable timer inputs initially
-     toggleTimerInputs(true);
+    return array;
 }
 
+// --- Game Flow ---
+function startGame() {
+    // Filter for scenarios with options (multi-choice)
+    multiChoiceScenarios = scenarios.filter(s => s.options && s.options.length > 0);
 
-function toggleTimerInputs(enabled) {
-    timers.forEach(timer => {
-        if (timer.inputElement) {
-             timer.inputElement.disabled = !enabled;
+    if (multiChoiceScenarios.length < quizLength) {
+        alert(`Aviso: Não há ${quizLength} situações com múltipla escolha disponíveis. O quiz terá ${multiChoiceScenarios.length} questões.`);
+        // Adjust quiz length if not enough scenarios
+        quizLength = multiChoiceScenarios.length;
+        if (quizLength === 0) {
+            alert("Erro: Nenhuma situação com múltipla escolha encontrada.");
+            return; // Stop game if no questions
         }
-    });
-    startRoundBtn.disabled = !enabled;
-    // resetTimersBtn.disabled = !enabled; // Keep reset enabled to allow reconfiguring timers anytime
+    }
+
+    // Select 10 random multi-choice scenarios
+    quizScenarios = shuffleArray([...multiChoiceScenarios]).slice(0, quizLength);
+
+    currentQuestionIndex = 0;
+    score = 0;
+
+    startScreenDiv.classList.add('hidden');
+    endScreenDiv.classList.add('hidden');
+    quizAreaDiv.classList.remove('hidden');
+
+    loadQuestion();
 }
 
+function loadQuestion() {
+    // Check if quiz is over
+    if (currentQuestionIndex >= quizLength) {
+        endGame();
+        return;
+    }
 
-// --- Scenario Logic ---
-function loadScenario() {
-    answerAreaDiv.classList.add('hidden');
-    modelAnswerTextP.textContent = '';
-    multiChoiceOptionsDiv.innerHTML = ''; // Clear previous options
+    // Clear previous state
+    feedbackAreaDiv.classList.add('hidden');
+    feedbackAreaDiv.innerHTML = '';
+    questionOptionsDiv.innerHTML = '';
+    nextQuestionBtn.classList.add('hidden');
 
-    // Simple random selection for now
-    const randomIndex = Math.floor(Math.random() * scenarios.length);
-    currentScenario = scenarios[randomIndex];
+    const currentScenario = quizScenarios[currentQuestionIndex];
 
-    // REMOVIDO: scenarioNumberSpan.textContent = currentScenario.id; // Remove this line
-
+    // Update question info (number of questions)
+    questionNumberSpan.textContent = `Questão ${currentQuestionIndex + 1} de ${quizLength}`;
     scenarioTextP.textContent = currentScenario.situation;
 
-    // Display options only for multi-choice modes
-    if (currentMode === '1v1' || currentMode === '1v1v1') {
-        currentScenario.options.forEach((option, index) => {
-            const optionDiv = document.createElement('div');
-            optionDiv.innerHTML = `
-                <input type="radio" id="option-${index}" name="scenario-option" value="${index}">
-                <label for="option-${index}">${option}</label>
-            `;
-            multiChoiceOptionsDiv.appendChild(optionDiv);
-        });
-    }
-     // Disable controls until timer starts (or manager is ready)
-     showAnswerBtn.disabled = true;
-     nextRoundBtn.disabled = true;
-
-     // Ensure timer inputs are enabled for configuration before starting
-     toggleTimerInputs(true);
-}
-
-function showModelAnswer() {
-    if (!currentScenario) return;
-
-    // Pause all timers
-    timers.forEach((timer, index) => pauseTimer(index));
-
-    modelAnswerTextP.textContent = currentScenario.modelAnswer;
-    answerAreaDiv.classList.remove('hidden');
-    showAnswerBtn.disabled = true; // Can't show answer again
-
-     // Enable next round button
-     nextRoundBtn.disabled = false;
-     // Enable timer inputs for next round config
-     toggleTimerInputs(true);
-
-     // Optional: Highlight correct multi-choice answer
-     if (currentMode === '1v1' || currentMode === '1v1v1') {
-        const correctRadio = document.getElementById(`option-${currentScenario.correctOptionIndex}`);
-        if(correctRadio) {
-            correctRadio.parentElement.style.fontWeight = 'bold';
-            correctRadio.parentElement.style.color = '#28a745'; // Green
-        }
-     }
-}
-
-function nextRound() {
-    // Reset timers visually and internally (values remain set)
-    timers.forEach((timer, index) => {
-        pauseTimer(index);
-        timer.current = timer.initial; // Reset current to initial
-        updateTimerDisplay(index);
-        // Clear highlighting on options if applicable
-        if (currentMode === '1v1' || currentMode === '1v1v1') {
-            const options = multiChoiceOptionsDiv.querySelectorAll('div');
-            options.forEach(opt => {
-                opt.style.fontWeight = 'normal';
-                opt.style.color = '#333';
-            });
-            // Uncheck radios
-            const radios = multiChoiceOptionsDiv.querySelectorAll('input[type="radio"]');
-            radios.forEach(radio => radio.checked = false);
-        }
+    // Load options
+    currentScenario.options.forEach((option, index) => {
+        const optionDiv = document.createElement('div');
+        optionDiv.innerHTML = `
+            <input type="radio" id="q${currentQuestionIndex}-option-${index}" name="scenario-option" value="${index}" onchange="handleAnswer(this.value)">
+            <label for="q${currentQuestionIndex}-option-${index}">${option}</label>
+        `;
+        questionOptionsDiv.appendChild(optionDiv);
     });
 
-    loadScenario(); // Load a new scenario
+     // Enable options
+     enableOptions(true);
 }
 
-// --- Timer Logic ---
-function formatTime(seconds) {
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
-    const formattedMinutes = String(minutes).padStart(2, '0');
-    const formattedSeconds = String(remainingSeconds).padStart(2, '0');
-    return `${formattedMinutes}:${formattedSeconds}`;
-}
+function handleAnswer(selectedIndex) {
+    enableOptions(false); // Disable options after answering
 
-function setTimerValue(index, value) {
-    const seconds = parseInt(value, 10);
-    if (!isNaN(seconds) && seconds >= 1) {
-        timers[index].initial = seconds;
-        timers[index].current = seconds;
-        updateTimerDisplay(index);
+    const currentScenario = quizScenarios[currentQuestionIndex];
+    const selectedIndexInt = parseInt(selectedIndex, 10); // Convert value from radio to int
+
+    feedbackAreaDiv.classList.remove('hidden');
+
+    let feedbackHTML = '';
+    let isCorrect = false;
+
+    if (selectedIndexInt === currentScenario.correctOptionIndex) {
+        feedbackHTML = '<h3>Resposta Correta!</h3>';
+        feedbackAreaDiv.className = 'feedback-area feedback-correct'; // Apply correct class
+        score++;
+        isCorrect = true;
     } else {
-        // Optionally revert to a default or previous valid value
-        timers[index].inputElement.value = timers[index].initial;
-    }
-}
-
-function updateTimerDisplay(index) {
-    if (timers[index] && timers[index].element) {
-        timers[index].element.textContent = formatTime(timers[index].current);
-         if (timers[index].current <= 10 && timers[index].current > 0) {
-             timers[index].element.style.color = 'red';
-         } else if (timers[index].current === 0) {
-             timers[index].element.style.color = '#6c757d'; // Gray when time is up
-         }
-         else {
-             timers[index].element.style.color = '#dc3545'; // Default red
-         }
-    }
-}
-
-function startTimer(index) {
-    if (timers[index] && timers[index].interval === null && timers[index].current > 0) {
-        // Ensure timer inputs are disabled once timers start
-        toggleTimerInputs(false); // Disable all timer inputs
-        startRoundBtn.disabled = true; // Disable Start Round button
-
-        showAnswerBtn.disabled = false; // Allow showing answer once round starts
-
-        timers[index].interval = setInterval(() => {
-            if (timers[index].current > 0) {
-                timers[index].current--;
-                updateTimerDisplay(index);
-            } else {
-                pauseTimer(index);
-                // Optional: trigger end of round logic if all timers finish
-                // Check if all timers are stopped
-                 const allStopped = timers.every(t => t.interval === null || t.current === 0);
-                 if (allStopped) {
-                      nextRoundBtn.disabled = false; // Allow moving to next round
-                 }
-            }
-        }, 1000);
-    }
-}
-
-function pauseTimer(index) {
-    if (timers[index] && timers[index].interval !== null) {
-        clearInterval(timers[index].interval);
-        timers[index].interval = null;
-         // After pausing a single timer, re-enable controls if not all were stopped
-         const allStopped = timers.every(t => t.interval === null);
-         if (!allStopped) {
-             toggleTimerInputs(true);
-             startRoundBtn.disabled = false; // Re-enable Start Round if not all paused
-         }
-    }
-}
-
-function resetTimer(index) {
-    if (timers[index]) {
-        pauseTimer(index); // Stop timer if running
-        timers[index].current = timers[index].initial; // Reset current time to initial
-        updateTimerDisplay(index);
-        // Ensure timer inputs are enabled after reset
-        toggleTimerInputs(true);
-         startRoundBtn.disabled = false; // Re-enable Start Round
-         showAnswerBtn.disabled = true;
-         nextRoundBtn.disabled = true;
-    }
-}
-
-function startAllTimers() {
-    // Disable inputs and start button before starting
-    toggleTimerInputs(false);
-    startRoundBtn.disabled = true;
-    showAnswerBtn.disabled = false; // Allow showing answer once round starts
-
-     timers.forEach((timer, index) => {
-        // Reset current time to initial time before starting all, unless already running
-        if (timer.interval === null && timer.current <= 0) { // Only reset if not running and time is up
-             timers[index].current = timers[index].initial;
-             updateTimerDisplay(index);
+        feedbackHTML = '<h3>Resposta Incorreta.</h3>';
+         // Highlight the player's incorrect choice
+        const playerRadio = document.getElementById(`q${currentQuestionIndex}-option-${selectedIndexInt}`);
+        if(playerRadio && playerRadio.parentElement) {
+             playerRadio.parentElement.style.fontWeight = 'bold';
+             playerRadio.parentElement.style.color = '#dc3545'; // Red
         }
-        // Start only if not already running and time is > 0
-        if (timer.interval === null && timers[index].current > 0) {
-            startTimer(index); // This calls setInterval and handles individual logic
-        }
-     });
+        feedbackAreaDiv.className = 'feedback-area feedback-incorrect'; // Apply incorrect class
+        isCorrect = false;
+    }
+
+     // Always show the model answer
+     feedbackHTML += `
+         <div id="model-answer-area">
+             <h4>Resposta Modelo:</h4>
+             <p>${currentScenario.modelAnswer}</p>
+         </div>
+     `;
+
+    feedbackAreaDiv.innerHTML = feedbackHTML;
+
+    // Highlight the correct answer
+    const correctRadio = document.getElementById(`q${currentQuestionIndex}-option-${currentScenario.correctOptionIndex}`);
+    if(correctRadio && correctRadio.parentElement) {
+        correctRadio.parentElement.style.fontWeight = 'bold';
+        correctRadio.parentElement.style.color = '#28a745'; // Green
+    }
+
+
+    nextQuestionBtn.classList.remove('hidden'); // Show next button
 }
 
-function resetAllTimers() {
-     timers.forEach((timer, index) => {
-        resetTimer(index); // Use the individual reset function
-     });
-      // Also hide answer and reload scenario just in case
-     answerAreaDiv.classList.add('hidden');
-     modelAnswerTextP.textContent = '';
-     // Re-enable timer inputs and start button
-     toggleTimerInputs(true);
-     startRoundBtn.disabled = false;
-     showAnswerBtn.disabled = true;
-     nextRoundBtn.disabled = true;
+function enableOptions(enabled) {
+    const options = questionOptionsDiv.querySelectorAll('input[type="radio"]');
+    options.forEach(radio => radio.disabled = !enabled);
 }
 
 
-// --- Initial Setup ---
-window.onload = showModeSelection;
+function nextQuestion() {
+    currentQuestionIndex++;
+    loadQuestion();
+}
+
+function endGame() {
+    quizAreaDiv.classList.add('hidden');
+    endScreenDiv.classList.remove('hidden');
+    finalScoreP.textContent = `Sua pontuação final: ${score} de ${quizLength}`;
+}
+
+function restartGame() {
+    endScreenDiv.classList.add('hidden');
+    startScreenDiv.classList.remove('hidden');
+    // The rest is handled by startGame() when the button is clicked
+}
+
+// --- Initial Load ---
+// No specific window.onload needed here, game starts via button click
