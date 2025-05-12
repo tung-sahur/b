@@ -1,0 +1,211 @@
+body {
+    font-family: sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2, h3 {
+    color: #0056b3;
+}
+
+#mode-selection {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+#mode-selection button {
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+#mode-selection button:hover {
+    background-color: #0056b3;
+}
+
+#game-area {
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+}
+
+.hidden {
+    display: none;
+}
+
+.timers {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #e9ecef;
+    border-radius: 5px;
+}
+
+#timer-inputs, #timer-displays {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 15px;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+.timer-config, .timer-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.timer-config label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.timer-config input {
+    width: 80px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.timer-display {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #dc3545; /* Red color for urgency */
+}
+
+.timer-display .timer-label {
+     font-size: 0.7em;
+     font-weight: normal;
+     color: #333;
+     margin-bottom: 5px;
+}
+
+
+.timer-controls {
+    display: flex;
+    gap: 5px;
+    margin-top: 5px;
+}
+
+.timer-controls button {
+    padding: 3px 8px;
+    font-size: 0.8em;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    background-color: #f8f9fa;
+}
+
+.timer-controls button:hover {
+    background-color: #e2e6ea;
+}
+
+#start-round-btn, #reset-timers-btn {
+     padding: 8px 15px;
+     margin-top: 10px;
+     font-size: 1em;
+     cursor: pointer;
+     border: none;
+     border-radius: 5px;
+}
+
+#start-round-btn {
+    background-color: #28a745;
+    color: white;
+}
+
+#start-round-btn:hover {
+    background-color: #218838;
+}
+
+#reset-timers-btn {
+    background-color: #ffc107;
+    color: #212529;
+}
+
+#reset-timers-btn:hover {
+    background-color: #e0a800;
+}
+
+
+#scenario-area {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px dashed #007bff;
+    border-radius: 5px;
+}
+
+#multi-choice-options {
+    margin-top: 15px;
+}
+
+#multi-choice-options div {
+    margin-bottom: 10px;
+}
+
+#multi-choice-options input[type="radio"] {
+    margin-right: 5px;
+}
+
+.controls {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.controls button {
+    margin: 5px;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+}
+
+#show-answer-btn {
+    background-color: #17a2b8;
+    color: white;
+}
+
+#show-answer-btn:hover {
+    background-color: #138496;
+}
+
+#next-round-btn {
+    background-color: #6c757d;
+    color: white;
+}
+
+#next-round-btn:hover {
+    background-color: #5a6268;
+}
+
+
+#answer-area {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    border-radius: 5px;
+    color: #155724;
+}
+
+#answer-area h3 {
+    color: #155724;
+}

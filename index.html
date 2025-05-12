@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo de Treinamento Logístico</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Jogo de Treinamento Logístico</h1>
+
+        <div id="mode-selection">
+            <h2>Selecione o Modo de Jogo:</h2>
+            <button onclick="selectMode('1v1')">1 vs 1 (Múltipla Escolha)</button>
+            <button onclick="selectMode('1v1v1')">1 vs 1 vs 1 (Múltipla Escolha)</button>
+            <button onclick="selectMode('team')">Equipe vs Equipe (Resposta Livre)</button>
+        </div>
+
+        <div id="game-area" class="hidden">
+            <h2 id="current-mode-display"></h2>
+
+            <div class="timers">
+                <h2>Cronômetros</h2>
+                <div id="timer-inputs">
+                    <!-- Timer input fields will be added here by JavaScript -->
+                </div>
+                <div id="timer-displays">
+                    <!-- Timer displays will be added here by JavaScript -->
+                </div>
+                <button id="start-round-btn" onclick="startAllTimers()">Iniciar Rodada</button>
+                 <button id="reset-timers-btn" onclick="resetAllTimers()">Configurar / Reiniciar Cronômetros</button>
+            </div>
+
+            <div id="scenario-area">
+                <h3>Situação <span id="scenario-number"></span>:</h3>
+                <p id="scenario-text"></p>
+
+                <div id="multi-choice-options">
+                    <!-- Multi-choice options will be added here for 1v1 and 1v1v1 modes -->
+                </div>
+            </div>
+
+            <div class="controls">
+                <button id="show-answer-btn" onclick="showModelAnswer()">Mostrar Resposta Modelo</button>
+                <button id="next-round-btn" onclick="nextRound()">Próxima Rodada</button>
+            </div>
+
+            <div id="answer-area" class="hidden">
+                <h3>Resposta Modelo:</h3>
+                <p id="model-answer-text"></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
