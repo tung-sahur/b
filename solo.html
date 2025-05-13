@@ -15,8 +15,8 @@
             /* Styles for the main quiz content */
         }
         #question-info {
-            display: flex; /* Keep flex just in case for layout flexibility */
-            justify-content: flex-start; /* Align to start now that timer is gone */
+            display: flex;
+            justify-content: flex-start;
             align-items: center;
             margin-bottom: 15px;
             padding-bottom: 10px;
@@ -25,10 +25,8 @@
         #question-number {
             font-size: 1.2em;
             font-weight: bold;
-            margin-right: 10px; /* Add some space after the number */
+            margin-right: 10px;
         }
-         /* Remove timer display style - it's gone */
-        /* #question-timer-display { ... } */
 
         #question-options {
             margin-top: 15px;
@@ -87,22 +85,42 @@
              font-size: 1.2em;
              margin-bottom: 20px;
           }
+
+        /* Add style for the back button */
+        .back-button {
+            display: inline-block; /* Make it behave like a button */
+            margin: 10px 0; /* Add margin top/bottom */
+            padding: 8px 15px; /* Similar padding to other control buttons */
+            font-size: 0.9em; /* Slightly smaller perhaps */
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #6c757d; /* Gray color */
+            color: white;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        .back-button:hover {
+            background-color: #5a6268; /* Darker gray on hover */
+        }
+
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Quiz Logístico Solo</h1>
 
+        <!-- Back button for the solo page -->
+        <a href="index.html" class="back-button">← Voltar para o Início</a>
+
         <div id="start-screen">
             <p>Teste seus conhecimentos resolvendo 10 situações logísticas aleatórias.</p>
-             <!-- Removed timer configuration input -->
             <button onclick="startGame()">Iniciar Quiz</button>
         </div>
 
         <div id="quiz-area" class="hidden">
             <div id="question-info">
                 <span id="question-number">Questão 1 de 10</span>
-                <!-- Removed timer display span -->
             </div>
 
             <div id="scenario-area">

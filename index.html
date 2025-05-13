@@ -6,22 +6,22 @@
     <title>Jogo de Treinamento Logístico</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Add style for the link button */
-        .button-link {
+        /* Add style for the back button */
+        .back-button {
             display: inline-block; /* Make it behave like a button */
-            margin: 10px;
-            padding: 10px 20px;
-            font-size: 1em;
+            margin: 10px 0; /* Add margin top/bottom */
+            padding: 8px 15px; /* Similar padding to other control buttons */
+            font-size: 0.9em; /* Slightly smaller perhaps */
             cursor: pointer;
             border: none;
             border-radius: 5px;
-            background-color: #007bff; /* Same as other buttons */
+            background-color: #6c757d; /* Gray color */
             color: white;
-            text-decoration: none; /* Remove underline */
+            text-decoration: none;
             transition: background-color 0.3s ease;
         }
-        .button-link:hover {
-            background-color: #0056b3;
+        .back-button:hover {
+            background-color: #5a6268; /* Darker gray on hover */
         }
     </style>
 </head>
@@ -31,15 +31,17 @@
 
         <div id="mode-selection">
             <h2>Selecione o Modo de Jogo:</h2>
-            <!-- Keep existing buttons -->
             <button onclick="selectMode('1v1')">1 vs 1 (Múltipla Escolha)</button>
             <button onclick="selectMode('1v1v1')">1 vs 1 vs 1 (Múltipla Escolha)</button>
             <button onclick="selectMode('team')">Equipe vs Equipe (Resposta Livre)</button>
-            <!-- Add the new button/link -->
-            <a href="solo.html" class="button-link">Quiz Solo (Individual)</a>
+            <!-- Link to the Solo Quiz page -->
+            <a href="solo.html" class="back-button">Quiz Solo (Individual)</a>
         </div>
 
         <div id="game-area" class="hidden">
+            <!-- Back button for the game area -->
+            <a href="index.html" class="back-button">← Voltar para o Início</a>
+
             <h2 id="current-mode-display"></h2>
 
             <div class="timers">
@@ -55,7 +57,7 @@
             </div>
 
             <div id="scenario-area">
-                <h3>Situação:</h3> <!-- Removed number span here -->
+                <h3>Situação:</h3> <!-- No number span here -->
                 <p id="scenario-text"></p>
 
                 <div id="multi-choice-options">
