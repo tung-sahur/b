@@ -5,29 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jogo de Treinamento Logístico</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        /* Add style for the back button */
-        .back-button {
-            display: inline-block; /* Make it behave like a button */
-            margin: 10px 0; /* Add margin top/bottom */
-            padding: 8px 15px; /* Similar padding to other control buttons */
-            font-size: 0.9em; /* Slightly smaller perhaps */
-            cursor: pointer;
-            border: none;
-            border-radius: 5px;
-            background-color: #6c757d; /* Gray color */
-            color: white;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-        }
-        .back-button:hover {
-            background-color: #5a6268; /* Darker gray on hover */
-        }
-    </style>
 </head>
 <body>
     <div class="container">
-        <h1>Jogo de Treinamento Logístico</h1>
+        <h1>
+            Jogo de Treinamento Logístico
+            <span>Resoluções de Problemas no Recebimento/Armazenamento de Cargas</span>
+        </h1>
 
         <div id="mode-selection">
             <h2>Selecione o Modo de Jogo:</h2>
@@ -35,7 +19,9 @@
             <button onclick="selectMode('1v1v1')">1 vs 1 vs 1 (Múltipla Escolha)</button>
             <button onclick="selectMode('team')">Equipe vs Equipe (Resposta Livre)</button>
             <!-- Link to the Solo Quiz page -->
-            <a href="solo.html" class="back-button">Quiz Solo (Individual)</a>
+            <a href="solo.html" class="button-link">Quiz Solo (Individual)</a>
+             <!-- Add Link to the Rules page and give it the button-link class -->
+            <a href="rules.html" class="button-link">Regras e Instruções</a>
         </div>
 
         <div id="game-area" class="hidden">
@@ -45,7 +31,10 @@
             <h2 id="current-mode-display"></h2>
 
             <div class="timers">
-                <h2>Cronômetros</h2>
+                <h2>
+                    Cronômetros
+                    <small id="powers-info"></small> <!-- Added ID here -->
+                </h2>
                 <div id="timer-inputs">
                     <!-- Timer input fields will be added here by JavaScript -->
                 </div>

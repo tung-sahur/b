@@ -72,6 +72,7 @@ const showAnswerBtn = document.getElementById('show-answer-btn');
 const nextRoundBtn = document.getElementById('next-round-btn');
 const answerAreaDiv = document.getElementById('answer-area');
 const modelAnswerTextP = document.getElementById('model-answer-text');
+const powersInfoSpan = document.getElementById('powers-info'); // Get the new element
 
 // --- Game Initialization ---
 function showModeSelection() {
@@ -87,9 +88,27 @@ function selectMode(mode) {
     currentMode = mode;
     modeSelectionDiv.classList.add('hidden');
     gameAreaDiv.classList.remove('hidden');
-    currentModeDisplay.textContent = `Modo: ${mode === 'team' ? 'Equipe vs Equipe' : mode.toUpperCase()}`;
 
-    setupTimers(mode);
+    // Update mode display and powers info based on mode
+    let modeText = '';
+    let powersText = '';
+    if (mode === '1v1') {
+        modeText = '1 vs 1';
+        powersText = 'Múltipla Escolha'; // No powers in 1v1
+    } else if (mode === '1v1v1') {
+        modeText = '1 vs 1 vs 1';
+        powersText = 'Múltipla Escolha'; // No powers in 1v1v1
+    } else if (mode === 'team') {
+        modeText = 'Equipe vs Equipe';
+        powersText = 'Poderes: Tempo ou Greve'; // Powers in Team vs Team
+    }
+    currentModeDisplay.textContent = `Modo: ${modeText}`;
+    if (powersInfoSpan) { // Check if the element exists (it only exists in index.html)
+         powersInfoSpan.textContent = powersText;
+    }
+
+
+    setupTimers(mode); // setupTimers needs the mode to create the right number of timers
     loadScenario(); // Call loadScenario after setting up timers and hiding mode selection
 }
 
@@ -185,8 +204,9 @@ function loadScenario() {
 
     scenarioTextP.textContent = currentScenario.situation;
 
-    // Display options only for multi-choice modes
+    // Display options only for multi-choice modes (1v1 and 1v1v1)
     if (currentMode === '1v1' || currentMode === '1v1v1') {
+        multiChoiceOptionsDiv.style.display = 'block'; // Ensure options area is visible
         currentScenario.options.forEach((option, index) => {
             const optionDiv = document.createElement('div');
             optionDiv.innerHTML = `
@@ -195,13 +215,18 @@ function loadScenario() {
             `;
             multiChoiceOptionsDiv.appendChild(optionDiv);
         });
+    } else {
+         // Hide options area for Team vs Team (Resposta Livre)
+         multiChoiceOptionsDiv.style.display = 'none';
     }
+
      // Disable controls until timer starts (or manager is ready)
      showAnswerBtn.disabled = true;
      nextRoundBtn.disabled = true;
 
      // Ensure timer inputs are enabled for configuration before starting
      toggleTimerInputs(true);
+     startRoundBtn.disabled = false; // Start Round should be enabled if inputs are enabled
 }
 
 function showModelAnswer() {
@@ -218,6 +243,8 @@ function showModelAnswer() {
      nextRoundBtn.disabled = false;
      // Enable timer inputs for next round config
      toggleTimerInputs(true);
+     startRoundBtn.disabled = false; // Re-enable Start Round button
+
 
      // Optional: Highlight correct multi-choice answer
      if (currentMode === '1v1' || currentMode === '1v1v1') {
@@ -300,11 +327,11 @@ function startTimer(index) {
                 updateTimerDisplay(index);
             } else {
                 pauseTimer(index);
-                // Optional: trigger end of round logic if all timers finish
-                // Check if all timers are stopped
-                 const allStopped = timers.every(t => t.interval === null || t.current === 0);
-                 if (allStopped) {
+                // Check if all timers are stopped (all finished countdown)
+                 const allFinished = timers.every(t => t.current === 0);
+                 if (allFinished) {
                       nextRoundBtn.disabled = false; // Allow moving to next round
+                      showAnswerBtn.disabled = false; // Re-enable show answer if time ran out for everyone
                  }
             }
         }, 1000);
@@ -315,12 +342,19 @@ function pauseTimer(index) {
     if (timers[index] && timers[index].interval !== null) {
         clearInterval(timers[index].interval);
         timers[index].interval = null;
-         // After pausing a single timer, re-enable controls if not all were stopped
-         const allStopped = timers.every(t => t.interval === null);
-         if (!allStopped) {
-             toggleTimerInputs(true);
-             startRoundBtn.disabled = false; // Re-enable Start Round if not all paused
-         }
+         // After pausing a single timer, check if the "Start Round" button should be re-enabled
+         // It should be re-enabled if *any* timer is paused, allowing manual restarts/adjustments
+         // But keep it disabled if *all* timers are running
+          const anyPaused = timers.some(t => t.interval === null);
+          const allStopped = timers.every(t => t.interval === null);
+
+          if (anyPaused && !allStopped) {
+               startRoundBtn.disabled = false; // Re-enable Start Round if at least one is paused but not all
+               toggleTimerInputs(true); // Also enable inputs for manual adjustment
+          } else if (allStopped) {
+               startRoundBtn.disabled = false; // Re-enable Start Round if all are stopped/paused
+               toggleTimerInputs(true); // Also enable inputs
+          }
     }
 }
 
@@ -329,9 +363,9 @@ function resetTimer(index) {
         pauseTimer(index); // Stop timer if running
         timers[index].current = timers[index].initial; // Reset current time to initial
         updateTimerDisplay(index);
-        // Ensure timer inputs are enabled after reset
+        // Ensure timer inputs and start button are enabled after reset
         toggleTimerInputs(true);
-         startRoundBtn.disabled = false; // Re-enable Start Round
+         startRoundBtn.disabled = false;
          showAnswerBtn.disabled = true;
          nextRoundBtn.disabled = true;
     }
@@ -342,10 +376,12 @@ function startAllTimers() {
     toggleTimerInputs(false);
     startRoundBtn.disabled = true;
     showAnswerBtn.disabled = false; // Allow showing answer once round starts
+    nextRoundBtn.disabled = true; // Disable next round until timers finish or answer is shown
 
      timers.forEach((timer, index) => {
         // Reset current time to initial time before starting all, unless already running
-        if (timer.interval === null && timer.current <= 0) { // Only reset if not running and time is up
+        // Only reset if timer is not running
+        if (timer.interval === null) {
              timers[index].current = timers[index].initial;
              updateTimerDisplay(index);
         }

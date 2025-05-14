@@ -6,7 +6,7 @@
     <title>Quiz Logístico Solo</title>
     <link rel="stylesheet" href="style.css"> <!-- Reusing the same CSS -->
     <style>
-        /* Specific styles for the solo page */
+        /* Specific styles for the solo page (keep these if they override default styles) */
         #start-screen {
             text-align: center;
             margin-bottom: 30px;
@@ -86,29 +86,17 @@
              margin-bottom: 20px;
           }
 
-        /* Add style for the back button */
-        .back-button {
-            display: inline-block; /* Make it behave like a button */
-            margin: 10px 0; /* Add margin top/bottom */
-            padding: 8px 15px; /* Similar padding to other control buttons */
-            font-size: 0.9em; /* Slightly smaller perhaps */
-            cursor: pointer;
-            border: none;
-            border-radius: 5px;
-            background-color: #6c757d; /* Gray color */
-            color: white;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-        }
-        .back-button:hover {
-            background-color: #5a6268; /* Darker gray on hover */
-        }
+        /* Removed the internal style block for back-button */
 
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Quiz Logístico Solo</h1>
+         <h1>
+            Quiz Logístico Solo <br>
+			<br>
+            <span>Resoluções de Problemas no Recebimento/Armazenamento de Cargas</span>
+        </h1>
 
         <!-- Back button for the solo page -->
         <a href="index.html" class="back-button">← Voltar para o Início</a>

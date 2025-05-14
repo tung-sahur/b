@@ -1,49 +1,196 @@
+/* Import a professional font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+:root {
+    /* Define color palette using CSS variables */
+    --primary-blue: #007bff;
+    --primary-blue-dark: #0056b3;
+    --secondary-teal: #17a2b8;
+    --secondary-teal-dark: #138496;
+    --success-green: #28a745;
+    --success-green-dark: #218838;
+    --warning-yellow: #ffc107;
+    --warning-yellow-dark: #e0a800;
+    --danger-red: #dc3545;
+    --danger-red-dark: #c82333;
+    --info-cyan: #17a2b8;
+    --info-cyan-dark: #138496;
+    --light-gray: #f8f9fa;
+    --mid-gray: #e9ecef;
+    --dark-gray: #6c757d;
+    --dark-gray-dark: #5a6268;
+    --text-color: #333;
+    --heading-color: var(--primary-blue-dark); /* Headings use a darker blue */
+    --container-bg: #fff;
+    --body-bg: #f4f4f4;
+    --border-color: #dee2e6; /* Light border color */
+    --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+
 body {
-    font-family: sans-serif;
+    font-family: 'Roboto', sans-serif; /* Use the imported font */
     line-height: 1.6;
     margin: 0;
     padding: 20px;
-    background-color: #f4f4f4;
-    color: #333;
+    background-color: var(--body-bg);
+    color: var(--text-color);
+    min-height: 100vh; /* Ensure body fills the viewport height */
+    display: flex; /* Use flexbox for centering content */
+    justify-content: center;
+    align-items: flex-start; /* Align to the top */
 }
 
 .container {
-    max-width: 900px;
+    max-width: 960px; /* Slightly wider container */
+    width: 100%; /* Ensure it takes full width up to max */
     margin: 0 auto;
-    background: #fff;
-    padding: 20px;
+    background: var(--container-bg);
+    padding: 30px; /* More padding */
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px var(--shadow-color); /* Stronger shadow */
+    box-sizing: border-box; /* Include padding in width */
 }
 
-h1, h2, h3 {
-    color: #0056b3;
-}
-
-#mode-selection {
+h1 {
+    color: var(--heading-color);
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 25px; /* More space below the title */
+    font-weight: 700; /* Bold */
 }
 
-#mode-selection button {
-    margin: 10px;
+h1 span {
+    display: block;
+    font-size: 0.6em; /* Slightly smaller subtitle */
+    color: var(--dark-gray); /* Dark gray for subtitle */
+    margin-top: 5px;
+    font-weight: 500; /* Medium weight */
+}
+
+
+h2 {
+    color: var(--heading-color);
+    margin-top: 20px;
+    margin-bottom: 15px;
+    font-weight: 500; /* Medium weight */
+    border-bottom: 2px solid var(--primary-blue); /* Underline for H2 */
+    padding-bottom: 5px;
+}
+
+h3 {
+    color: var(--heading-color);
+    margin-top: 15px;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+h4 {
+    color: var(--primary-blue); /* Slightly lighter blue for H4 */
+    margin-top: 10px;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+
+/* --- Button Styling (Unified) --- */
+button,
+.button-link,
+.back-button {
+    display: inline-block;
     padding: 10px 20px;
     font-size: 1em;
+    font-weight: 500; /* Medium weight */
+    text-align: center;
+    text-decoration: none;
     cursor: pointer;
     border: none;
     border-radius: 5px;
-    background-color: #007bff;
-    color: white;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.2s ease, opacity 0.2s ease;
+    margin: 5px; /* Default margin for general buttons */
 }
 
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+
+/* Specific Button Colors */
+.button-link { /* Default blue for mode selection and rules/solo links */
+    background-color: var(--primary-blue);
+    color: white;
+}
+.button-link:hover {
+    background-color: var(--primary-blue-dark);
+}
+
+/* Specific styles for mode selection buttons */
+#mode-selection button {
+    background-color: var(--primary-blue); /* Blue */
+    color: white;
+    /* Remove default margin if gap is used in parent */
+}
 #mode-selection button:hover {
-    background-color: #0056b3;
+     background-color: var(--primary-blue-dark);
+}
+
+
+#start-round-btn {
+    background-color: var(--success-green); /* Green */
+    color: white;
+}
+#start-round-btn:hover {
+    background-color: var(--success-green-dark);
+}
+
+#reset-timers-btn {
+    background-color: var(--warning-yellow); /* Yellow/Orange */
+    color: var(--text-color);
+}
+#reset-timers-btn:hover {
+    background-color: var(--warning-yellow-dark);
+}
+
+#show-answer-btn {
+    background-color: var(--secondary-teal); /* Teal */
+    color: white;
+}
+#show-answer-btn:hover {
+    background-color: var(--secondary-teal-dark);
+}
+
+#next-round-btn {
+    background-color: var(--dark-gray); /* Dark Gray */
+    color: white;
+}
+#next-round-btn:hover {
+    background-color: var(--dark-gray-dark);
+}
+
+.back-button { /* Gray back button */
+    background-color: var(--dark-gray);
+    color: white;
+    padding: 8px 15px; /* Slightly smaller */
+    font-size: 0.9em;
+    margin: 10px 0 20px 0; /* Specific margin for placement */
+}
+.back-button:hover {
+    background-color: var(--dark-gray-dark);
+}
+
+
+/* --- Layouts --- */
+#mode-selection {
+    text-align: center;
+    margin-bottom: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px; /* Increased gap */
 }
 
 #game-area {
-    border-top: 1px solid #eee;
-    padding-top: 20px;
+    border-top: 1px solid var(--border-color); /* Use variable */
+    padding-top: 25px; /* More padding */
 }
 
 .hidden {
@@ -51,18 +198,34 @@ h1, h2, h3 {
 }
 
 .timers {
-    margin-bottom: 20px;
-    padding: 15px;
-    background-color: #e9ecef;
-    border-radius: 5px;
+    margin-bottom: 25px; /* More margin */
+    padding: 20px; /* More padding */
+    background-color: var(--mid-gray); /* Medium gray background */
+    border-radius: 8px; /* Rounded corners */
+}
+
+.timers h2 {
+     border-bottom: none; /* Remove underline specific to general H2 */
+     padding-bottom: 0;
+     margin-top: 0;
+     margin-bottom: 10px;
+     text-align: center; /* Center timer title */
+}
+
+.timers h2 small {
+     font-size: 0.6em;
+     font-weight: normal;
+     color: var(--dark-gray);
+     display: block;
+     margin-top: 5px;
 }
 
 #timer-inputs, #timer-displays {
     display: flex;
     justify-content: center;
-    gap: 20px;
-    margin-bottom: 15px;
-    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    gap: 30px; /* Increased gap */
+    margin-bottom: 20px; /* More margin */
+    flex-wrap: wrap;
 }
 
 .timer-config, .timer-display {
@@ -72,163 +235,256 @@ h1, h2, h3 {
 }
 
 .timer-config label {
-    margin-bottom: 5px;
-    font-weight: bold;
+    margin-bottom: 8px; /* More space */
+    font-weight: 500; /* Medium weight */
+    color: var(--text-color);
 }
 
-.timer-config input {
-    width: 80px;
-    padding: 5px;
-    border: 1px solid #ccc;
+.timer-config input[type="number"] {
+    width: 70px; /* Slightly smaller input */
+    padding: 8px; /* More padding */
+    border: 1px solid var(--border-color);
     border-radius: 4px;
     text-align: center;
+    font-size: 1em;
+    -moz-appearance: textfield; /* Hide spinner buttons in Firefox */
+}
+.timer-config input[type="number"]::-webkit-outer-spin-button,
+.timer-config input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none; /* Hide spinner buttons in Chrome/Safari */
+    margin: 0;
 }
 
+
 .timer-display {
-    font-size: 1.5em;
-    font-weight: bold;
-    color: #dc3545; /* Red color for urgency */
+    font-size: 1.8em; /* Larger timer font */
+    font-weight: 700; /* Bold */
+    color: var(--danger-red);
+    margin-bottom: 10px; /* Space between time and controls */
 }
 
 .timer-display .timer-label {
-     font-size: 0.7em;
-     font-weight: normal;
-     color: #333;
-     margin-bottom: 5px;
+     font-size: 0.8em; /* Slightly larger label */
+     font-weight: 500;
+     color: var(--text-color);
+     margin-bottom: 8px; /* More space */
 }
 
 
 .timer-controls {
     display: flex;
-    gap: 5px;
-    margin-top: 5px;
+    gap: 8px; /* Increased gap */
+    margin-top: 0;
 }
 
 .timer-controls button {
-    padding: 3px 8px;
-    font-size: 0.8em;
+    padding: 5px 10px; /* More padding */
+    font-size: 0.9em;
     cursor: pointer;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    background-color: #f8f9fa;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background-color: var(--light-gray); /* Light background */
+    color: var(--text-color);
 }
 
 .timer-controls button:hover {
-    background-color: #e2e6ea;
+    background-color: var(--border-color); /* Hover effect */
 }
 
-#start-round-btn, #reset-timers-btn {
-     padding: 8px 15px;
-     margin-top: 10px;
-     font-size: 1em;
-     cursor: pointer;
-     border: none;
-     border-radius: 5px;
-}
-
-#start-round-btn {
-    background-color: #28a745;
-    color: white;
-}
-
-#start-round-btn:hover {
-    background-color: #218838;
-}
-
-#reset-timers-btn {
-    background-color: #ffc107;
-    color: #212529;
-}
-
-#reset-timers-btn:hover {
-    background-color: #e0a800;
+/* Combined start/reset buttons */
+.timers > button { /* Select buttons directly inside .timers */
+    margin-top: 15px; /* Space above these buttons */
 }
 
 
 #scenario-area {
-    margin-bottom: 20px;
-    padding: 15px;
-    border: 1px dashed #007bff;
-    border-radius: 5px;
+    margin-bottom: 25px; /* More margin */
+    padding: 20px; /* More padding */
+    border: 2px dashed var(--primary-blue); /* Keep dashed border but thicker */
+    border-radius: 8px; /* Rounded corners */
 }
+ #scenario-area h3 {
+     margin-top: 0; /* Remove top margin if it's the first element */
+     border-bottom: 1px solid var(--border-color); /* Subtle underline for scenario title */
+     padding-bottom: 5px;
+     margin-bottom: 15px;
+ }
+
 
 #multi-choice-options {
-    margin-top: 15px;
+    margin-top: 20px; /* More margin */
 }
 
 #multi-choice-options div {
-    margin-bottom: 10px;
+    margin-bottom: 12px; /* More space between options */
+}
+
+#multi-choice-options label {
+    cursor: pointer; /* Indicate clickable label */
+    padding: 5px 0; /* Make label area larger for clicking */
+    display: inline-block; /* Allows padding */
 }
 
 #multi-choice-options input[type="radio"] {
-    margin-right: 5px;
+    margin-right: 8px; /* More space */
+    vertical-align: middle; /* Align radio with text */
 }
+
+/* Style for correct/incorrect answers in multi-choice after reveal */
+#question-options div.correct-answer label {
+    font-weight: bold;
+    color: var(--success-green-dark);
+}
+#question-options div.incorrect-answer label {
+     font-weight: bold;
+     color: var(--danger-red-dark);
+}
+
 
 .controls {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 30px; /* More margin */
+    display: flex; /* Use flex for controls */
+    justify-content: center;
+    gap: 15px; /* Space between buttons */
 }
 
 .controls button {
-    margin: 5px;
-    padding: 10px 20px;
-    font-size: 1em;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-}
-
-#show-answer-btn {
-    background-color: #17a2b8;
-    color: white;
-}
-
-#show-answer-btn:hover {
-    background-color: #138496;
-}
-
-#next-round-btn {
-    background-color: #6c757d;
-    color: white;
-}
-
-#next-round-btn:hover {
-    background-color: #5a6268;
+    /* Styles defined in the general button section */
 }
 
 
 #answer-area {
-    margin-top: 20px;
-    padding: 15px;
-    background-color: #d4edda;
-    border: 1px solid #c3e6cb;
-    border-radius: 5px;
-    color: #155724;
+    margin-top: 25px; /* More margin */
+    padding: 20px; /* More padding */
+    border-radius: 8px; /* Rounded corners */
+    color: var(--text-color); /* Standard text color */
+    border: 1px solid; /* Border will get color from modifier classes */
+}
+
+/* Specific Feedback Colors */
+.feedback-correct {
+    background-color: #e9f7ef; /* Lighter green background */
+    border-color: var(--success-green); /* Green border */
+}
+.feedback-incorrect {
+    background-color: #fdedee; /* Lighter red background */
+    border-color: var(--danger-red); /* Red border */
 }
 
 #answer-area h3 {
-    color: #155724;
+     margin-top: 0; /* Remove top margin */
+     color: var(--heading-color); /* Use standard heading color */
+     font-weight: 700; /* Bold */
 }
 
-/* ... existing styles ... */
+#model-answer-area {
+     margin-top: 15px;
+     padding-top: 15px;
+     border-top: 1px solid var(--border-color); /* Separator line */
+}
 
-/* Add styles for the back button */
-.back-button {
-    display: inline-block; /* Make it behave like a button */
-    margin: 10px 0; /* Add margin top/bottom */
-    padding: 8px 15px; /* Similar padding to other control buttons */
-    font-size: 0.9em; /* Slightly smaller perhaps */
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-    background-color: #6c757d; /* Gray color */
+#model-answer-area h4 {
+     margin-top: 0;
+     margin-bottom: 8px;
+     color: var(--primary-blue-dark); /* Darker blue for model answer title */
+     font-weight: 700; /* Bold */
+     font-size: 1em;
+}
+
+
+#quiz-area #question-info { /* Styles specific to the solo quiz question header */
+    display: flex;
+    justify-content: space-between; /* Distribute space */
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+#quiz-area #question-number {
+    font-size: 1.3em; /* Larger font */
+    font-weight: 700;
+    color: var(--heading-color);
+    margin-right: 20px; /* Space between number and potential timer */
+}
+
+#quiz-area #question-timer-display { /* Timer style back for solo page if you change your mind */
+    font-size: 1.8em;
+    font-weight: 700;
+    color: var(--danger-red);
+}
+/* Ensure timer display is hidden in solo HTML if not used */
+
+
+#question-options label { /* Ensure labels are clickable */
+     cursor: pointer;
+}
+
+
+#end-screen {
+     text-align: center;
+     margin-top: 30px;
+     padding-top: 25px;
+     border-top: 1px solid var(--border-color);
+}
+ #end-screen h2 {
+     color: var(--success-green-dark);
+     font-size: 1.8em;
+     margin-bottom: 10px;
+     border-bottom: none;
+     padding-bottom: 0;
+ }
+ #end-screen p {
+     font-size: 1.3em;
+     margin-bottom: 25px;
+     font-weight: 500;
+ }
+
+ #restart-quiz-btn {
+    /* Uses general button styles */
+    background-color: var(--primary-blue);
     color: white;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-}
+ }
+  #restart-quiz-btn:hover {
+      background-color: var(--primary-blue-dark);
+  }
 
-.back-button:hover {
-    background-color: #5a6268; /* Darker gray on hover */
-}
+  /* Rules page specific styles */
+  #rules-content h1 {
+       margin-bottom: 10px; /* Adjusted for subtitle below */
+  }
+  #rules-content h1 + h2 { /* Style for the subtitle directly after H1 */
+      margin-top: 5px;
+      margin-bottom: 2em;
+      font-size: 1em;
+      font-weight: normal;
+      color: var(--dark-gray);
+      text-align: center;
+      border-bottom: none;
+      padding-bottom: 0;
 
-/* ... rest of your existing styles ... */
+  }
+  #rules-content h3 {
+       margin-top: 1.8em; /* More space above main sections */
+       border-bottom: 1px solid var(--border-color); /* Subtle separator */
+       padding-bottom: 5px;
+       margin-bottom: 1em;
+  }
+  #rules-content h4 {
+       margin-top: 1.5em; /* Space above sub-sections */
+       color: var(--primary-blue); /* Use primary blue */
+       font-weight: 700;
+       font-size: 1em; /* Keep size reasonable */
+  }
+   #rules-content ul,
+   #rules-content ol {
+       padding-left: 25px; /* Indent lists */
+   }
+    #rules-content li {
+        margin-bottom: 0.8em;
+    }
+    #rules-content strong {
+        font-weight: 700;
+        color: var(--heading-color);
+    }
