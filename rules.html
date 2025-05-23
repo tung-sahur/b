@@ -6,186 +6,178 @@
     <title>Regras e Instruções - Jogo Logístico</title>
     <link rel="stylesheet" href="style.css"> <!-- Reusing the same CSS -->
     <style>
-        /* Specific styles for the rules page content */
-        #rules-content h2 {
-            margin-top: 20px;
-            margin-bottom: 10px;
-            color: #0056b3; /* Blue, consistent with headings */
-        }
-
-        #rules-content h3 {
-             margin-top: 15px;
-             margin-bottom: 8px;
-             color: #007bff; /* Lighter blue */
-        }
-
+        /* Specific styles for rules readability */
+        #rules-content h1,
+        #rules-content h2,
+        #rules-content h3,
         #rules-content h4 {
-             margin-top: 10px;
-             margin-bottom: 5px;
-             color: #333; /* Dark gray */
-             font-size: 1em;
+            color: var(--heading-color); /* Match heading color */
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
         }
+         #rules-content h1 {
+             text-align: center;
+             margin-top: 0;
+             margin-bottom: 1em;
+         }
+         #rules-content h2 {
+             text-align: center;
+             font-size: 1.2em;
+             font-weight: normal;
+             margin-bottom: 2em;
+         }
+
 
         #rules-content p {
-            margin-bottom: 10px;
+            margin-bottom: 1em;
         }
 
-        #rules-content ul {
-            margin-bottom: 15px;
-            padding-left: 20px;
+        #rules-content ul,
+        #rules-content ol {
+            margin-left: 20px;
+            margin-bottom: 1em;
         }
-
         #rules-content li {
-            margin-bottom: 5px;
+            margin-bottom: 0.5em;
+            line-height: 1.5;
+        }
+        #rules-content strong {
+            font-weight: 700;
+            color: var(--heading-color); /* Highlight key terms */
         }
 
-        /* Style for the prominent theme title */
-        #theme-title {
-            font-size: 1.4em;
-            font-weight: bold;
-            text-align: center;
-            margin: 20px 0;
-            color: #28a745; /* Green color */
-        }
+         /* Styles for specific sections in rules */
+          #rules-content h1 {
+               margin-bottom: 10px;
+          }
+          #rules-content h1 + h2 {
+              margin-top: 5px;
+              margin-bottom: 2em;
+              font-size: 1em;
+              font-weight: normal;
+              color: var(--dark-gray);
+              text-align: center;
+              border-bottom: none;
+              padding-bottom: 0;
 
-        /* Assuming .back-button style is in style.css now */
-         .back-button {
-            display: inline-block;
-            margin: 10px 0;
-            padding: 8px 15px;
-            font-size: 0.9em;
-            cursor: pointer;
-            border: none;
-            border-radius: 5px;
-            background-color: #6c757d;
-            color: white;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-        }
-        .back-button:hover {
-            background-color: #5a6268;
-        }
-
-
+          }
+          #rules-content h3 {
+               margin-top: 1.8em;
+               border-bottom: 1px solid var(--border-color);
+               padding-bottom: 5px;
+               margin-bottom: 1em;
+          }
+          #rules-content h4 {
+               margin-top: 1.5em;
+               color: var(--primary-blue);
+               font-weight: 700;
+               font-size: 1em;
+          }
+           #rules-content ul,
+           #rules-content ol {
+               padding-left: 25px;
+           }
+            #rules-content li {
+                margin-bottom: 0.8em;
+                line-height: 1.5;
+            }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Regras e Instruções</h1>
-
-        <!-- Back button to return to the home page -->
+        <!-- Back button -->
         <a href="index.html" class="back-button">← Voltar para o Início</a>
 
-        <div id="theme-title">
-            Resoluções de Problemas no Recebimento e Armazenamento de Cargas
-        </div>
-
         <div id="rules-content">
-            <p>Bem-vindo ao Jogo de Treinamento Logístico! Este jogo foi desenvolvido para simular desafios reais que podem ocorrer nas operações de recebimento e armazenagem, ajudando você a desenvolver habilidades essenciais como tomada de decisão, autonomia, pró-atividade, comunicação e pensamento crítico.</p>
+            <h1>Regras e Instruções do Jogo de Treinamento Logístico</h1>
 
+            <h2>Tema do Treinamento: Resoluções de Problemas no Recebimento/Armazenamento de Cargas</h2>
+
+            <p>Bem-vindo! Esta página detalha as regras e modos de jogo disponíveis. Note que o Gestor que estiver conduzindo o treinamento pode adaptar algumas regras ou ativar/desativar modos e funcionalidades (como Poderes) de acordo com os objetivos da sessão.</p>
+
+            <h3>Conceito Geral</h3>
+            <p>Em todos os modos, você será apresentado a uma <strong>Situação</strong> comum no dia a dia de uma operação logística (como divergências de quantidade, problemas de identificação, questões de espaço, avarias, etc.). Seu objetivo é analisar a situação e decidir a melhor ação a ser tomada, considerando as boas práticas logísticas e as prioridades da operação, dentro do contexto de <strong>Resoluções de Problemas no Recebimento/Armazenamento</strong>.</p>
             <p>Existem diferentes modos de jogo disponíveis, adequados para treinamento individual ou em grupo.</p>
 
-            <h2>Conceito Geral</h2>
-            <p>Em todos os modos, você será apresentado a uma <strong>Situação</strong> comum no dia a dia de uma operação logística (como divergências de quantidade, problemas de identificação, questões de espaço, etc.). Seu objetivo é analisar a situação e decidir a melhor ação a ser tomada, considerando as boas práticas logísticas e as prioridades da operação.</p>
+            <h3>Modos de Jogo</h3>
 
-            <h2>Modos de Jogo</h2>
-
-            <h3>1. Quiz Solo (Individual)</h3>
+            <h4>1. Quiz Solo (Individual)</h4>
             <ul>
                 <li><strong>Formato:</strong> Um jogador.</li>
-                <li><strong>Objetivo:</strong> Testar seu conhecimento e agilidade na tomada de decisão individualmente.</li>
+                <li><strong>Objetivo:</strong> Testar seu conhecimento e agilidade na tomada de decisão individualmente sobre problemas no recebimento/armazenamento.</li>
                 <li><strong>Como Jogar:</strong>
-                    <ul>
-                        <li>Na tela inicial, selecione o Quiz Solo.</li>
+                    <ol>
+                        <li>Na página inicial do jogo, clique no botão "Quiz Solo (Individual)".</li>
                         <li>Clique em "Iniciar Quiz".</li>
-                        <li>Você receberá 10 situações aleatórias, uma por vez, no formato de <strong>Múltipla Escolha</strong>.</li>
+                        <li>Você receberá 10 situações aleatórias (que possuem opções de múltipla escolha), uma por vez.</li>
                         <li>Leia a Situação e as opções de resposta apresentadas.</li>
                         <li>Clique na opção que você considera a melhor solução para o problema.</li>
                         <li>Após selecionar uma opção, o quiz mostrará imediatamente se sua resposta está correta ou incorreta, e exibirá a <strong>Resposta Modelo</strong> com a justificativa da ação ideal.</li>
                         <li>Clique em "Próxima Questão" para seguir para a próxima situação.</li>
-                    </ul>
+                    </ol>
                 </li>
                 <li><strong>Fim do Jogo:</strong> O quiz termina após a 10ª questão. Sua pontuação final (número de respostas corretas) será exibida. Você pode então "Jogar Novamente" ou "Voltar para o Início".</li>
                 <li><strong>Pontuação:</strong> Você ganha 1 ponto para cada resposta correta.</li>
             </ul>
 
-            <h3>2. Modos Multijogador (Para Grupos)</h3>
-            <p>Estes modos são ideais para treinamento em equipe ou competição entre participantes, incentivando a discussão e o alinhamento de ideias. O <strong>Gestor</strong> ou <strong>Facilitador</strong> conduz a partida.</p>
+            <h4>2. Modos Multijogador (Com Cronômetros)</h4>
+            <p>Estes modos são ideais para treinamento em equipe ou competição entre participantes, incentivando a discussão e o alinhamento de ideias para a resolução de problemas no recebimento/armazenamento. O <strong>Gestor</strong> ou <strong>Facilitador</strong> conduz a partida na página principal do jogo, utilizando os cronômetros.</p>
             <ul>
-                <li><strong>Formato:</strong>
+                <li><strong>Formato:</strong> Respostas de Múltipla Escolha.</li>
+                <li><strong>Formatos Disponíveis:</strong>
                     <ul>
-                        <li><strong>1 vs 1:</strong> Duas equipes ou dois competidores individuais.</li>
-                        <li><strong>1 vs 1 vs 1:</strong> Três equipes ou três competidores individuais.</li>
-                        <li><strong>Equipe vs Equipe:</strong> Duas equipes (ideal para grupos maiores). Este modo usa o formato de Resposta Livre e pode incorporar <strong>Poderes</strong>.</li>
+                        <li><strong>1 vs 1:</strong> Duas equipes ou dois competidores individuais, cada um com seu cronômetro.</li>
+                        <li><strong>1 vs 1 vs 1:</strong> Três equipes ou três competidores individuais, cada um com seu cronômetro.</li>
                     </ul>
                 </li>
-                <li><strong>Objetivo:</strong> Discutir a situação em grupo (se aplicável ao modo) e chegar a uma decisão em equipe dentro de um tempo limite.</li>
-                <li><strong>Como Jogar (Geral - Conduzido pelo Gestor):</strong>
-                    <ul>
-                        <li>O Gestor seleciona o modo de jogo desejado na página inicial.</li>
-                        <li>O Gestor configura os <strong>Cronômetros</strong> com o tempo limite para a rodada (o tempo pode ser ajustado a cada nova rodada).</li>
+                <li><strong>Objetivo:</strong> Discutir a situação em grupo (se aplicável ao formato) e chegar a uma decisão de Múltipla Escolha dentro do tempo limite.</li>
+                 <li><strong>Como Jogar (Geral - Conduzido pelo Gestor na Página Principal):</strong>
+                    <ol>
+                        <li>O Gestor seleciona o modo de jogo desejado (1 vs 1 ou 1 vs 1 vs 1).</li>
+                        <li>O Gestor configura os <strong>Cronômetros</strong> com o tempo limite para a rodada para cada equipe/participante. O tempo pode ser ajustado a cada nova rodada.</li>
                         <li>O Gestor lê a <strong>Situação</strong> em voz alta para todos os participantes/equipes.</li>
                         <li>O Gestor clica em "Iniciar Rodada" para começar os cronômetros.</li>
-                        <li>Cada equipe/participante discute a situação e decide a melhor resposta dentro do tempo limite.</li>
-                        <li>Ao final do tempo, as equipes/participantes devem apresentar suas respostas.</li>
+                        <li>Cada equipe/participante discute a situação e decide qual das opções de Múltipla Escolha é a melhor resposta dentro do tempo limite. A equipe/participante pode sinalizar sua resposta ao Gestor ao terminar.</li>
+                        <li>Ao final do tempo, todas as equipes/participantes devem ter sua resposta definida.</li>
                         <li>O Gestor pode clicar em "Mostrar Resposta Modelo" para ver a solução ideal.</li>
-                        <li>O Gestor <strong>avalia</strong> as respostas apresentadas pelas equipes/participantes com base nos critérios (veja abaixo) e atribui pontos.</li>
-                        <li>O Gestor discute a Resposta Modelo com todos, explicando o raciocínio por trás da solução recomendada e o que poderia ser melhorado nas respostas dos participantes.</li>
+                        <li>O Gestor <strong>avalia</strong> as respostas apresentadas (verificando qual opção foi escolhida) e atribui pontos (normalmente 1 ponto para a resposta correta).</li>
+                        <li>O Gestor discute a Situação, a Resposta Modelo e as respostas dos participantes, explicando o raciocínio e o que poderia ser melhorado.</li>
                         <li>O Gestor clica em "Próxima Rodada" para continuar com uma nova situação (o número de rodadas é definido pelo Gestor antes do jogo).</li>
-                    </ul>
+                    </ol>
                 </li>
-                <li><strong>Formato de Resposta (Varia por Modo):</strong>
-                    <ul>
-                        <li><strong>1 vs 1 e 1 vs 1 vs 1 (Múltipla Escolha):</strong> Os participantes/equipes devem escolher uma das opções de múltipla escolha apresentadas na tela.</li>
-                        <li><strong>Equipe vs Equipe (Resposta Livre):</strong> As equipes devem formular sua própria resposta e escrevê-la (em um papel, quadro branco, etc.) para apresentar ao Gestor. A tela exibirá apenas a Situação.</li>
-                    </ul>
-                </li>
-                <li><strong>Critérios de Avaliação do Gestor (Modos Multijogador):</strong> O Gestor deve considerar os seguintes pontos ao avaliar as respostas e atribuir pontos:
-                    <ul>
-                        <li><strong>Coerência:</strong> A resposta faz sentido dentro do contexto logístico e das políticas (reais ou hipotéticas) da empresa?</li>
-                        <li><strong>Eficiência:</strong> A solução é prática e otimiza o uso de recursos (tempo, mão de obra, espaço)?</li>
-                        <li><strong>Viabilidade:</strong> A ação sugerida é realisticamente implementável?</li>
-                        <li><strong>Segurança e Normas:</strong> A resposta leva em conta a segurança dos operadores e a conformidade com normas (como manuseio de produtos perigosos, EPIs, etc.)?</li>
-                        <li><strong>Comunicação:</strong> (Mais relevante para Resposta Livre) A resposta é clara e detalhada o suficiente?</li>
-                    </ul>
-                </li>
+                <li><strong>Critérios de Avaliação do Gestor:</strong> O Gestor deve considerar se a opção de Múltipla Escolha selecionada pela equipe/participante corresponde à Resposta Modelo. Critérios de eficiência, segurança, etc., já estão embutidos na Resposta Modelo para as opções pré-definidas.</li>
             </ul>
 
-            <h3>Poderes (Modo Equipe vs Equipe)</h3>
-            <p>Neste modo, as equipes podem usar <strong>Poderes</strong> para afetar a equipe adversária ou beneficiar a si mesmas, adicionando um elemento estratégico ao jogo.</p>
+           
+             </ul>
+
+             <h4>Poderes (Opcional)</h4>
+             <p>O Gestor pode decidir ativar o uso de Poderes (geralmente no Modo Equipe vs Equipe) para adicionar um elemento estratégico.</p>
              <ul>
-                <li><strong>Uso:</strong> Uma equipe declara o uso de um poder *antes* da rodada começar (ou conforme regra definida pelo Gestor).</li>
-                <li><strong>Limite:</strong> O Gestor define quantos poderes cada equipe tem disponível por jogo.</li>
+                <li><strong>Uso:</strong> Uma equipe declara o uso de um Poder <em>antes</em> da rodada começar (ou conforme regra definida pelo Gestor). O Gestor aplica o efeito manualmente ajustando os cronômetros ou definindo quem está "de greve".</li>
+                <li><strong>Limite:</strong> O Gestor define quantos Poderes cada equipe pode usar por jogo ou por rodada.</li>
                 <li><strong>Tipos de Poderes (efeitos definidos pelo Gestor):</strong>
                     <ul>
-                        <li><strong>Tempo:</strong> Permite manipular o tempo de resposta na rodada atual. A equipe que usar este poder pode escolher <strong>UMA</strong> das opções:
-                            <ul>
-                                <li>Aumentar seu próprio tempo de resposta por um valor X (em segundos ou minutos).</li>
-                                <li>Diminuir o tempo de resposta de uma equipe adversária selecionada por um valor Y (em segundos ou minutos).</li>
-                            </ul>
-                            (Os valores de X e Y são definidos pelo Gestor antes do jogo).
-                        </li>
-                        <li><strong>Greve:</strong> A equipe que usa este poder escolhe um determinado número de membros da equipe adversária selecionada (quantidade definida pelo Gestor) que ficarão "de greve". Estes membros não poderão falar, discutir ou opinar durante toda a rodada. Eles devem permanecer em silêncio enquanto o restante da equipe tenta resolver a situação.</li>
+                        <li><strong>Poder Tempo:</strong> A equipe que usa este poder decide se quer <strong>aumentar</strong> o seu próprio tempo de resposta ou <strong>diminuir</strong> o tempo de resposta de uma equipe adversária nesta rodada. O <em>valor</em> do aumento/diminuição é definido pelo Gestor (ex: +30 segundos para si, ou -30 segundos para o adversário).</li>
+                        <li><strong>Poder Greve:</strong> A equipe que usa este poder escolhe um determinado número de membros da equipe rival (o número é definido pelo Gestor, proporcional ao tamanho das equipes) que ficarão "de greve" nesta rodada — ou seja, não poderão falar, discutir ou opinar enquanto o restante da equipe tenta resolver a situação dentro do tempo.</li>
                     </ul>
                 </li>
-            </ul>
+             </ul>
 
 
-            <h2>Fim do Jogo</h2>
+            <h3>Fim do Jogo</h3>
             <ul>
                 <li><strong>Quiz Solo:</strong> Termina após as 10 questões.</li>
                 <li><strong>Modos Multijogador:</strong> Terminam após o número predefinido de rodadas. A equipe ou competidor com a maior pontuação ao final vence.</li>
             </ul>
 
-            <h2>Dicas para o Treinamento</h2>
+            <h3>Dicas para o Treinamento</h3>
             <ul>
-                <li><strong>Discussão é Chave:</strong> Nos modos em equipe, incentive a discussão e o raciocínio coletivo.</li>
-                <li><strong>Justifique Suas Respostas:</strong> Pense no *porquê* sua resposta é a melhor. Quais princípios logísticos você está aplicando?</li>
-                <li><strong>Aprenda com a Resposta Modelo:</strong> Após cada rodada (em grupo) ou questão (solo), preste atenção à Resposta Modelo e à explicação do Gestor. Entenda o raciocínio ideal.</li>
-                <li><strong>Considere o Contexto:</strong> Lembre-se que a melhor resposta pode depender de políticas internas da empresa, recursos disponíveis e prioridades momentâneas.</li>
+                <li><strong>Discussão é Chave:</strong> Nos modos em equipe, incentive a discussão e o raciocínio coletivo para encontrar a melhor solução para os problemas de recebimento/armazenamento.
+                <li><strong>Justifique Suas Respostas:</strong> Pense no <em>porquê</em> sua resposta é a melhor, aplicando os princípios e práticas de recebimento/armazenamento.
+                <li><strong>Aprenda com a Resposta Modelo:</strong> Após cada rodada (em grupo) ou questão (solo), preste atenção à Resposta Modelo e à explicação do Gestor. Entenda o raciocínio ideal no contexto do recebimento/armazenamento.
+                <li><strong>Considere o Contexto:</strong> Lembre-se que a melhor resposta pode depender de políticas internas da empresa, recursos disponíveis e prioridades momentâneas na área de recebimento/armazenamento.
             </ul>
-
-            <p>Esperamos que este jogo seja uma ferramenta valiosa para o seu desenvolvimento em logística! Bom treinamento!</p>
 
         </div>
     </div>

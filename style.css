@@ -105,7 +105,7 @@ button,
     border: none;
     border-radius: 5px;
     transition: background-color 0.2s ease, opacity 0.2s ease;
-    margin: 5px; /* Default margin for general buttons */
+    /* margin: 5px; Removed default margin for general buttons */
 }
 
 button:disabled {
@@ -115,22 +115,20 @@ button:disabled {
 
 
 /* Specific Button Colors */
-.button-link { /* Default blue for mode selection and rules/solo links */
+/* Default blue for mode selection buttons and rules/solo links */
+#mode-selection button,
+#mode-selection .button-link {
     background-color: var(--primary-blue);
     color: white;
 }
-.button-link:hover {
+#mode-selection button:hover,
+#mode-selection .button-link:hover {
     background-color: var(--primary-blue-dark);
 }
 
 /* Specific styles for mode selection buttons */
 #mode-selection button {
-    background-color: var(--primary-blue); /* Blue */
-    color: white;
-    /* Remove default margin if gap is used in parent */
-}
-#mode-selection button:hover {
-     background-color: var(--primary-blue-dark);
+    /* Using default blue from the combined rule above */
 }
 
 
@@ -187,6 +185,12 @@ button:disabled {
     justify-content: center;
     gap: 15px; /* Increased gap */
 }
+
+/* Specific adjustment for solo/rules links if they wrap */
+#mode-selection .button-link {
+     margin-top: 10px; /* Add back some top margin just for the links */
+}
+
 
 #game-area {
     border-top: 1px solid var(--border-color); /* Use variable */
@@ -249,8 +253,8 @@ button:disabled {
     font-size: 1em;
     -moz-appearance: textfield; /* Hide spinner buttons in Firefox */
 }
-.timer-config input[type="number"]::-webkit-outer-spin-button,
-.timer-config input[type="number"]::-webkit-inner-spin-button {
+#timer-inputs input[type="number"]::-webkit-outer-spin-button,
+#timer-inputs input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none; /* Hide spinner buttons in Chrome/Safari */
     margin: 0;
 }
@@ -293,7 +297,7 @@ button:disabled {
 
 /* Combined start/reset buttons */
 .timers > button { /* Select buttons directly inside .timers */
-    margin-top: 15px; /* Space above these buttons */
+    margin: 15px 5px 0 5px; /* Top, Right, Bottom, Left margin */
 }
 
 
@@ -351,6 +355,7 @@ button:disabled {
 
 .controls button {
     /* Styles defined in the general button section */
+    margin: 0 5px; /* Add some horizontal margin */
 }
 
 
@@ -457,25 +462,25 @@ button:disabled {
   #rules-content h1 + h2 { /* Style for the subtitle directly after H1 */
       margin-top: 5px;
       margin-bottom: 2em;
-      font-size: 1em;
+      font-size: 1em; /* Adjusted size */
       font-weight: normal;
-      color: var(--dark-gray);
+      color: var(--dark-gray); /* Use var */
       text-align: center;
       border-bottom: none;
       padding-bottom: 0;
 
   }
   #rules-content h3 {
-       margin-top: 1.8em; /* More space above main sections */
-       border-bottom: 1px solid var(--border-color); /* Subtle separator */
+       margin-top: 1.8em;
+       border-bottom: 1px solid var(--border-color); /* Use var */
        padding-bottom: 5px;
        margin-bottom: 1em;
   }
   #rules-content h4 {
-       margin-top: 1.5em; /* Space above sub-sections */
-       color: var(--primary-blue); /* Use primary blue */
+       margin-top: 1.5em;
+       color: var(--primary-blue); /* Use var */
        font-weight: 700;
-       font-size: 1em; /* Keep size reasonable */
+       font-size: 1em;
   }
    #rules-content ul,
    #rules-content ol {
@@ -488,3 +493,4 @@ button:disabled {
         font-weight: 700;
         color: var(--heading-color);
     }
+    /* Add margins to buttons inside controls div */

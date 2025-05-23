@@ -17,10 +17,10 @@
             <h2>Selecione o Modo de Jogo:</h2>
             <button onclick="selectMode('1v1')">1 vs 1 (Múltipla Escolha)</button>
             <button onclick="selectMode('1v1v1')">1 vs 1 vs 1 (Múltipla Escolha)</button>
-            <button onclick="selectMode('team')">Equipe vs Equipe (Resposta Livre)</button>
+            <!-- Removed: <button onclick="selectMode('team')">Equipe vs Equipe (Resposta Livre)</button> -->
             <!-- Link to the Solo Quiz page -->
             <a href="solo.html" class="button-link">Quiz Solo (Individual)</a>
-             <!-- Add Link to the Rules page and give it the button-link class -->
+             <!-- Link to the Rules page -->
             <a href="rules.html" class="button-link">Regras e Instruções</a>
         </div>
 
@@ -33,7 +33,8 @@
             <div class="timers">
                 <h2>
                     Cronômetros
-                    <small id="powers-info"></small> <!-- Added ID here -->
+                    <!-- Adjusted small text as powers were only for Team mode -->
+                    <small id="powers-info">(Múltipla Escolha)</small>
                 </h2>
                 <div id="timer-inputs">
                     <!-- Timer input fields will be added here by JavaScript -->
@@ -46,7 +47,7 @@
             </div>
 
             <div id="scenario-area">
-                <h3>Situação:</h3> <!-- No number span here -->
+                <h3>Situação:</h3>
                 <p id="scenario-text"></p>
 
                 <div id="multi-choice-options">
